@@ -1,6 +1,4 @@
 class ZionSpeak < Formula
-  include Language::Python::Virtualenv
-
   desc "Mac-native video transcription and subtitle clipping"
   homepage "https://github.com/dawei101/zion-speak"
   url "https://github.com/dawei101/zion-speak/archive/refs/tags/v0.1.0.tar.gz"
@@ -12,13 +10,16 @@ class ZionSpeak < Formula
   depends_on :macos
   depends_on "python@3.13"
 
-  # Online install: mlx and mlx-whisper are wheel-only on PyPI (no sdist),
-  # so the standard `virtualenv_install_with_resources` flow can't resolve
-  # them. We let pip pull every dep from PyPI at install time. This trades
-  # offline reproducibility for the ability to ship Apple Silicon ML deps.
+  # Online install: mlx and mlx-whisper publish wheels only on PyPI
+  # (no sdist), so brew's standard virtualenv_install_with_resources
+  # cannot resolve them. We build a venv and let pip pull every dep
+  # online at install time.
   def install
-    venv = virtualenv_create(libexec, "python3.13")
-    venv.pip_install buildpath
+    python = Formula["python@3.13"].opt_bin/"python3.13"
+    system python, "-m", "venv", libexec
+    system libexec/"bin/pip", "install", "--upgrade", "pip"
+    system libexec/"bin/pip", "install", "-v", buildpath
+    bin.install_symlink libexec/"bin/zion-speak"
   end
 
   test do
