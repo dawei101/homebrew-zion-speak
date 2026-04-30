@@ -26,7 +26,8 @@ class ZionSpeak < Formula
     python = Formula["python@3.13"].opt_bin/"python3.13"
     system python, "-m", "venv", libexec
     system libexec/"bin/pip", "install", "--upgrade", "pip"
-    system libexec/"bin/pip", "install", "-v", "--no-binary=jiter", buildpath
+    system libexec/"bin/pip", "install", "-v",
+           "--no-binary=jiter,pydantic-core", buildpath
     bin.install_symlink libexec/"bin/zion-speak"
   end
 
