@@ -26,8 +26,14 @@ class ZionSpeak < Formula
     python = Formula["python@3.13"].opt_bin/"python3.13"
     system python, "-m", "venv", libexec
     system libexec/"bin/pip", "install", "--upgrade", "pip"
+    # Force source builds for every wheel that has an sdist on PyPI.
+    # Prebuilt wheels often lack -headerpad_max_install_names, breaking
+    # brew's dylib relocation. mlx is the one exception we whitelist as
+    # binary-only since it has no sdist.
     system libexec/"bin/pip", "install", "-v",
-           "--no-binary=jiter,pydantic-core", buildpath
+           "--no-binary=:all:",
+           "--only-binary=mlx",
+           buildpath
     bin.install_symlink libexec/"bin/zion-speak"
   end
 
