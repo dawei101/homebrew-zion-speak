@@ -2,7 +2,7 @@ class ZionSpeak < Formula
   desc "Mac-native video transcription and subtitle clipping"
   homepage "https://github.com/dawei101/zion-speak"
   url "https://github.com/dawei101/zion-speak/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "0a4e289ac73aa5dedd28023c97646e6fdc5de93c46bc08aa157d5902122c0018"
+  sha256 "53e1d2aa340b4bbd8129ffd40ad473e8640ea0627f8dacb02dd7b8db4ebbe806"
   license "MIT"
 
   depends_on arch: :arm64
