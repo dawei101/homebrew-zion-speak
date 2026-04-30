@@ -12,11 +12,13 @@ class ZionSpeak < Formula
   depends_on "ffmpeg"
   depends_on "python@3.13"
 
-  # Resource blocks for transitive Python deps will be inserted by
-  # `brew update-python-resources zion-speak` in the next task.
-
+  # Online install: mlx and mlx-whisper are wheel-only on PyPI (no sdist),
+  # so the standard `virtualenv_install_with_resources` flow can't resolve
+  # them. We let pip pull every dep from PyPI at install time. This trades
+  # offline reproducibility for the ability to ship Apple Silicon ML deps.
   def install
-    virtualenv_install_with_resources
+    venv = virtualenv_create(libexec, "python3.13")
+    venv.pip_install buildpath
   end
 
   test do
