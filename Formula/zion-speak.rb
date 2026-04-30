@@ -7,9 +7,9 @@ class ZionSpeak < Formula
   sha256 "0a4e289ac73aa5dedd28023c97646e6fdc5de93c46bc08aa157d5902122c0018"
   license "MIT"
 
-  depends_on :macos
   depends_on arch: :arm64
   depends_on "ffmpeg"
+  depends_on :macos
   depends_on "python@3.13"
 
   # Online install: mlx and mlx-whisper are wheel-only on PyPI (no sdist),
